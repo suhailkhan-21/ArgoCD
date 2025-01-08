@@ -1,18 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: nginx-test-service
+  namespace: test-suhail
   labels:
-    helm.sh/chart: datastudio-0.1.0
-    app.kubernetes.io/name: datastudio
-    app.kubernetes.io/instance: resourceinterface
-    app.kubernetes.io/version: "1.16.0"
-    app.kubernetes.io/managed-by: Helm
-  name: "resourceinterface-service"
+    app: nginx-test
 spec:
-  type: ClusterIP
-  selector:
-    app.kubernetes.io/name: datastudio
-    app.kubernetes.io/instance: resourceinterface
   ports:
-    - port: 8000
-      targetPort: 8000
+  - port: 80
+    targetPort: 80
+  selector:
+    app: nginx-test
+  type: ClusterIP
