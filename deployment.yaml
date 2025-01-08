@@ -1,1 +1,40 @@
-bububu
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resourceinterface
+  labels:
+    helm.sh/chart: datastudio-0.1.0
+    app.kubernetes.io/name: datastudio
+    app.kubernetes.io/instance: resourceinterface
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: datastudio
+      app.kubernetes.io/instance: resourceinterface
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: datastudio
+        app.kubernetes.io/instance: resourceinterface
+    spec:
+      containers:
+        - name: data-studio-interface
+          image: "mfacrdspd.azurecr.io/datastudio-resourceinterface-qa:5"
+          imagePullPolicy: Always
+          # envFrom:
+          # - configMapRef:
+          #     name:
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: "60Mi"
+              cpu: "10m"
+            limits:
+              memory: "100Mi"
+              cpu: "20m"
+      imagePullSecrets:
+      - name: acr-secret
